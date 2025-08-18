@@ -35,6 +35,8 @@ ffbuild_dockerbuild() {
         rm -r "$FFBUILD_PREFIX"/bin "$FFBUILD_PREFIX"/lib/*.dll.a
     elif [[ $TARGET == linux* ]]; then
         rm -r "$FFBUILD_PREFIX"/bin "$FFBUILD_PREFIX"/lib/*.so*
+    elif [[ $TARGET == darwin* ]]; then
+        rm -r "$FFBUILD_PREFIX"/bin "$FFBUILD_PREFIX"/lib/*.dylib
     else
         echo "Unknown target"
         return -1

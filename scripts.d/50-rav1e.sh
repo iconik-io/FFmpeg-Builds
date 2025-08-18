@@ -11,11 +11,15 @@ ffbuild_enabled() {
 ffbuild_dockerbuild() {
     local myconf=(
         --prefix="${FFBUILD_PREFIX}"
-        --target="${FFBUILD_RUST_TARGET}"
         --library-type=staticlib
         --crt-static
         --release
     )
+    if [[ $TARGET != darwin* ]]; then
+        myconf+=(
+            --target="${FFBUILD_RUST_TARGET}"
+        )
+    fi
 
     # Pulls in target-libs for host tool builds otherwise.
     # Luckily no target libraries are needed.

@@ -13,7 +13,11 @@ ffbuild_dockerbuild() {
     mkdir build && cd build
 
     local armsimd=()
-    if [[ $TARGET == *arm* ]]; then
+    if [[ $TARGET == darwin* ]]; then
+        armsimd+=( -DVVENC_ENABLE_ARM_SIMD=OFF )
+        export CFLAGS="$CFLAGS -Wno-error=deprecated-literal-operator"
+        export CXXFLAGS="$CXXFLAGS -Wno-error=deprecated-literal-operator"
+    elif [[ $TARGET == *arm* ]]; then
         armsimd+=( -DVVENC_ENABLE_ARM_SIMD=ON )
 
         if [[ "$CC" != *clang* ]]; then

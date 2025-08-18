@@ -1,4 +1,7 @@
 /Dockerfile*
+/build_conf*
+/build_osx*
 /ffbuild/
 /artifacts/
 /.cache/
+build/

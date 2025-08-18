@@ -23,6 +23,8 @@ ffbuild_dockerbuild() {
             --host="$FFBUILD_TOOLCHAIN"
             --cross-prefix="$FFBUILD_CROSS_PREFIX"
         )
+    elif [[ $TARGET == darwin* ]]; then
+        echo "not cross-compiling"
     else
         echo "Unknown target"
         return -1

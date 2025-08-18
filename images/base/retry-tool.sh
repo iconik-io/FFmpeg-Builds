@@ -2,8 +2,8 @@
 set -xe -o pipefail
 
 RETRY_COUNTER=0
-MAX_RETRY=10
-CUR_TIMEOUT=120
+MAX_RETRY=5
+CUR_TIMEOUT=600
 while [[ $RETRY_COUNTER -lt $MAX_RETRY ]]; do
     (timeout $CUR_TIMEOUT "$@") && break || sleep $(shuf -i 5-90 -n 1)
     RETRY_COUNTER=$(( $RETRY_COUNTER + 1 ))

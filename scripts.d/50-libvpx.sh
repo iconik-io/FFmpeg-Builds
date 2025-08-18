@@ -46,6 +46,8 @@ ffbuild_dockerbuild() {
             --target=arm64-linux-gcc
         )
         export CROSS="$FFBUILD_CROSS_PREFIX"
+    elif [[ $TARGET == darwin* ]]; then
+        echo "not cross-compiling"
     else
         echo "Unknown target"
         return -1

@@ -3,7 +3,11 @@ set -xeo pipefail
 cd "$(dirname "$0")"
 source util/vars.sh
 
-TMPCFG="$(mktemp --suffix=.toml)"
+if [[ $(uname -s) == "Darwin" ]]; then
+    TMPCFG="$(gmktemp --suffix=.toml)"
+else
+    TMPCFG="$(mktemp --suffix=.toml)"
+fi
 cat <<EOF >"$TMPCFG"
 [worker.oci]
   max-parallelism = 4

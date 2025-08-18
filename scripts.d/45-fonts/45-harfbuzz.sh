@@ -11,7 +11,6 @@ ffbuild_dockerbuild() {
     mkdir build && cd build
 
     local myconf=(
-        --cross-file=/cross.meson
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
         --default-library=static
@@ -26,6 +25,11 @@ ffbuild_dockerbuild() {
         -Ddoc_tests=false
         -Dutilities=disabled
     )
+    if [[ $TARGET == win* || $TARGET == linux* ]]; then
+        myconf+=(
+            --cross-file=/cross.meson
+        )
+    fi
 
     if [[ $TARGET == win* ]]; then
         myconf+=(

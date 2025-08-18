@@ -13,16 +13,25 @@ ffbuild_dockerstage() {
 }
 
 ffbuild_dockerbuild() {
-    for patch in /patches/*.patch; do
-        echo "Applying $patch"
-        git am < "$patch"
-    done
-
+    if [[ $TARGET != darwin* ]]; then
+        for patch in /patches/*.patch; do
+            echo "Applying $patch"
+            git am < "$patch"
+        done
+    else
+        for patch in $ROOT_DIR/patches/aom/*.patch; do
+            echo "Applying $patch"
+            git am < "$patch"
+        done
+    fi
     mkdir cmbuild && cd cmbuild
 
     # Workaround broken build system
-    export CFLAGS="$CFLAGS -pthread -I/opt/ffbuild/include/libvmaf"
-
+    if [[ $TARGET == darwin* ]]; then
+        export CFLAGS="$CFLAGS -pthread -I$FFBUILD_PREFIX/include/libvmaf"
+    else
+        export CFLAGS="$CFLAGS -pthread -I/opt/ffbuild/include/libvmaf"
+    fi
     cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_SHARED_LIBS=OFF -DENABLE_EXAMPLES=NO -DENABLE_TESTS=NO -DENABLE_TOOLS=NO -DCONFIG_TUNE_VMAF=1 ..
     make -j$(nproc)
     make install

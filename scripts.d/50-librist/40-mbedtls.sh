@@ -22,7 +22,7 @@ ffbuild_dockerbuild() {
 
     # Let's hope this is just a false-positive
     export CFLAGS="$CFLAGS -Wno-error=array-bounds"
-    if [[ $CC != *clang* ]]; then
+    if [[ $(uname -s) != "Darwin" ]]; then
         export CFLAGS="$CFLAGS -Wno-error=unterminated-string-initialization"
     fi
 

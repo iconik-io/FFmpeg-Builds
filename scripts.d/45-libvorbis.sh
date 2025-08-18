@@ -8,6 +8,10 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
+    if [[ $TARGET == darwin* ]]; then
+        echo "remove force_cpusubtype_ALL from configure.ac"
+        sed -i.bak 's/-force_cpusubtype_ALL//g' configure.ac
+    fi
     ./autogen.sh
 
     local myconf=(
@@ -21,6 +25,8 @@ ffbuild_dockerbuild() {
         myconf+=(
             --host="$FFBUILD_TOOLCHAIN"
         )
+    elif [[ $TARGET == darwin* ]]; then
+        echo "not cross compiling"
     else
         echo "Unknown target"
         return -1

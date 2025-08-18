@@ -44,6 +44,8 @@ ffbuild_dockerbuild() {
             OS=linux
             ARCH=aarch64
         )
+    elif [[ $TARGET == darwin* ]]; then
+        echo "not cross-compiling"
     else
         echo "Unknown target"
         return -1

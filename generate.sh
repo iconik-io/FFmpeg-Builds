@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
-shopt -s globstar
+if [[ $(uname -s) != "Darwin" ]]; then
+    shopt -s globstar
+fi
 cd "$(dirname "$0")"
 source util/vars.sh
 
@@ -80,7 +82,7 @@ for ID in $(ls -1d scripts.d/??-* | sed -s 's|^.*/\(..\).*|\1|' | sort -u); do
             SCRIPT="$STAGE"
         else
             SCRIPTS=( "$STAGE"/??-* )
-            SCRIPT="${SCRIPTS[-1]}"
+            SCRIPT="${SCRIPTS[${#SCRIPTS[@]}-1]}"
         fi
 
         (
@@ -124,6 +126,7 @@ for addin in ${ADDINS[*]}; do
 done
 
 for script in scripts.d/**/*.sh; do
+    echo "Processing $script"
     FF_CONFIGURE+=" $(get_output $script configure)"
     FF_CFLAGS+=" $(get_output $script cflags)"
     FF_CXXFLAGS+=" $(get_output $script cxxflags)"

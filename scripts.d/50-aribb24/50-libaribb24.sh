@@ -12,10 +12,17 @@ ffbuild_dockerstage() {
 }
 
 ffbuild_dockerbuild() {
-    for patch in /patches/*.patch; do
-        echo "Applying $patch"
-        git am < "$patch"
-    done
+    if [[ $TARGET != darwin* ]]; then
+        for patch in /patches/*.patch; do
+            echo "Applying $patch"
+            git am < "$patch"
+        done
+    else
+        for patch in $ROOT_DIR/patches/aribb24/*.patch; do
+            echo "Applying $patch"
+            git am < "$patch"
+        done
+    fi
 
     # Library switched to LGPL on master, but didn't bump version since.
     # FFmpeg checks for >1.0.3 to allow LGPL builds.
@@ -34,6 +41,8 @@ ffbuild_dockerbuild() {
         myconf+=(
             --host="$FFBUILD_TOOLCHAIN"
         )
+    elif [[ $TARGET == darwin* ]]; then
+        echo "not cross compiling"
     else
         echo "Unknown target"
         return -1

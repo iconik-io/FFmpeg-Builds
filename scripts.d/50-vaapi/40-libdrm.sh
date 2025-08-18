@@ -31,6 +31,8 @@ ffbuild_dockerbuild() {
         myconf+=(
             --cross-file=/cross.meson
         )
+    elif [[ $TARGET == darwin* ]]; then
+        echo "not cross-compiling"
     else
         echo "Unknown target"
         return -1

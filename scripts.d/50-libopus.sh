@@ -9,13 +9,18 @@ ffbuild_enabled() {
 
 ffbuild_dockerdl() {
     default_dl .
-    echo "./autogen.sh"
+    if [[ $TARGET != darwin* ]]; then
+        echo "./autogen.sh"
+    fi
 }
 
 ffbuild_dockerbuild() {
+
+    if [[ $TARGET == darwin* ]]; then
+        ./autogen.sh
+    fi
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --host="$FFBUILD_TOOLCHAIN"
         --disable-shared
         --enable-static
         --disable-extra-programs
@@ -24,6 +29,11 @@ ffbuild_dockerbuild() {
     if [[ $TARGET == winarm* ]]; then
         myconf+=(
             --disable-rtcd
+        )
+    fi
+    if [[ $TARGET == win* || $TARGET == linux* ]]; then
+        myconf+=(
+            --host="$FFBUILD_TOOLCHAIN"
         )
     fi
 

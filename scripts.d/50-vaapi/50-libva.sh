@@ -9,6 +9,7 @@ ffbuild_enabled() {
     [[ $ADDINS_STR == *5.1* && $TARGET == win* ]] && return -1
     [[ $ADDINS_STR == *6.0* && $TARGET == win* ]] && return -1
     [[ $TARGET == linuxarm64 ]] && return -1
+    [[ $TARGET == darwin* ]] && return -1
     return 0
 }
 
@@ -46,6 +47,12 @@ ffbuild_dockerbuild() {
             --cross-file=/cross.meson
             --default-library=static
             -Dwith_win32=yes
+        )
+    elif [[ $TARGET == darwin* ]]; then
+        echo "not cross-compiling"
+        echo "TODO NO CHANCE THIS WORKS"
+        myconf+=(
+            --default-library=static
         )
     else
         echo "Unknown target"

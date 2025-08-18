@@ -20,10 +20,16 @@ ffbuild_dockerbuild() {
         myconf+=(
             --host="$FFBUILD_TOOLCHAIN"
         )
+    elif [[ $TARGET == darwin* ]]; then
+        echo "not cross compiling"
     else
         echo "Unknown target"
         return -1
     fi
+    echo "Building libxml2 for $TARGET"
+    echo "LDFLAGS $LDFLAGS"
+    echo "CXXFLAGS $CXXFLAGS"
+    echo "CFLAGS $CFLAGS"
 
     ./autogen.sh "${myconf[@]}"
     make -j$(nproc)

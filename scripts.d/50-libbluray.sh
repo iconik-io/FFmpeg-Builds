@@ -4,6 +4,10 @@ SCRIPT_REPO="https://code.videolan.org/videolan/libbluray.git"
 SCRIPT_COMMIT="4066744f4f4cf66d58fcb3e320813d788e9017ba"
 
 ffbuild_enabled() {
+    if [[ $TARGET == darwin* ]]; then
+        echo "skip libbluray on macOS"
+        return -1
+    fi
     return 0
 }
 

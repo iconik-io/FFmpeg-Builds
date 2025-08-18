@@ -1,6 +1,8 @@
 #!/bin/bash
 set -xe
-shopt -s globstar
+if [[ $(uname -s) != "Darwin" ]]; then
+    shopt -s globstar
+fi
 cd "$(dirname "$0")"
 source util/vars.sh
 

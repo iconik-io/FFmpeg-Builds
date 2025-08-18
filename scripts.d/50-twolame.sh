@@ -8,6 +8,11 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
+    if [[ $TARGET == darwin* ]]; then
+        unset LIBTOOL
+        unset LIBTOOLIZE
+    fi
+
     NOCONFIGURE=1 ./autogen.sh
     touch doc/twolame.1
 
@@ -23,6 +28,8 @@ ffbuild_dockerbuild() {
         myconf+=(
             --host="$FFBUILD_TOOLCHAIN"
         )
+    elif [[ $TARGET == darwin* ]]; then
+        echo "not cross compiling"
     else
         echo "Unknown target"
         return -1
