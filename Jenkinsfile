@@ -37,11 +37,11 @@ pipeline {
                     }
                     steps {
                         clean_workspace()
-                        sh "makeimage.sh linux64 ${env.FFMPEG_LIC_TYPE} ${env.FFMPEG_VERSION}"
-//                         sh "makeimage.sh win64 ${env.FFMPEG_LIC_TYPE} ${env.FFMPEG_VERSION}"
+                        sh "./makeimage.sh linux64 ${env.FFMPEG_LIC_TYPE} ${env.FFMPEG_VERSION}"
+//                         sh "./makeimage.sh win64 ${env.FFMPEG_LIC_TYPE} ${env.FFMPEG_VERSION}"
                         archiveArtifacts '.cache/**'
-                        sh "build.sh linux64 ${env.FFMPEG_LIC_TYPE} ${env.FFMPEG_VERSION}"
-//                         sh "build.sh win64 ${env.FFMPEG_LIC_TYPE} ${env.FFMPEG_VERSION}"
+                        sh "./build.sh linux64 ${env.FFMPEG_LIC_TYPE} ${env.FFMPEG_VERSION}"
+//                         sh "./build.sh win64 ${env.FFMPEG_LIC_TYPE} ${env.FFMPEG_VERSION}"
                         archiveArtifacts 'artifacts/**'
                     }
                     post {
@@ -57,8 +57,8 @@ pipeline {
 //                     }
 //                     steps {
 //                         clean_workspace()
-//                         sh "generate_deps.sh darwinarm64 ${env.FFMPEG_LICENSE} ${env.FFMPEG_VERSION}"
-//                         sh "build_macos.sh darwinarm64 ${env.FFMPEG_LICENSE} ${env.FFMPEG_VERSION}"
+//                         sh "./generate_deps.sh darwinarm64 ${env.FFMPEG_LICENSE} ${env.FFMPEG_VERSION}"
+//                         sh "./build_macos.sh darwinarm64 ${env.FFMPEG_LICENSE} ${env.FFMPEG_VERSION}"
 //                         archiveArtifacts 'artifacts/**'
 //                     }
 //                     post {
