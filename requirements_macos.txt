@@ -1,0 +1,2 @@
+setuptools==80.8.0
+meson==1.8.0
