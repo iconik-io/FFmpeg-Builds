@@ -18,11 +18,9 @@ ffbuild_dockerdl() {
 }
 
 ffbuild_dockerbuild() {
-    # No automake 1.18 packaged anywhere yet.
+    # No automake 1.18 packaged anywhere yet (except brew).
     ls -al
-    if [[ "$(uname)" == "Darwin" ]]; then
-        sed -i 's/-1.18/-1.17/' Makefile.devel libcharset/Makefile.devel
-    else
+    if [[ "$(uname)" != "Darwin" ]]; then
         sed -i 's/-1.18/-1.16/' Makefile.devel libcharset/Makefile.devel
     fi
 
