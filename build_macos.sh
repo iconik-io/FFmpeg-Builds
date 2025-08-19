@@ -4,7 +4,7 @@ cd "$(dirname "$0")"
 source util/vars.sh
 
 export PATH="$HOME/.cargo/bin:$PATH"
-PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 PYTHON=$(pyenv root)/versions/3.12.9/bin/python3
 $PYTHON -m venv --clear py_build_env
 source py_build_env/bin/activate

@@ -3,6 +3,7 @@ set -e
 cd "$(dirname "$0")"
 source util/vars.sh
 
+export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 export LC_ALL=en_US.UTF-8
 export ROOT_DIR="$(pwd)"
 export FFBUILD_PREFIX="$(pwd)/build/output"
