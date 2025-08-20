@@ -9,16 +9,11 @@ ffbuild_enabled() {
 
 ffbuild_dockerdl() {
     default_dl .
-    if [[ $TARGET != darwin* ]]; then
-        echo "./autogen.sh"
-    fi
 }
 
 ffbuild_dockerbuild() {
 
-    if [[ $TARGET == darwin* ]]; then
-        ./autogen.sh
-    fi
+    ./autogen.sh
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --disable-shared

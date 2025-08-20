@@ -13,6 +13,9 @@ ffbuild_dockerdl() {
 }
 
 ffbuild_dockerbuild() {
+    if [[ $(uname -s) == "Darwin" ]]; then
+        export AR="/opt/homebrew/opt/binutils/bin/ar"
+    fi
     local common_config=(
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX"
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN"

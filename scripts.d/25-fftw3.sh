@@ -2,15 +2,19 @@
 
 SCRIPT_REPO="https://github.com/FFTW/fftw3.git"
 SCRIPT_COMMIT="816722732224231e90e634b5839bb7808cddc6cd"
+SCRIPT_TARBALL="https://www.fftw.org/fftw-3.3.10.tar.gz"
 
 ffbuild_enabled() {
     return 0
 }
 
+ffbuild_dockerdl() {
+    echo "mkdir -p fftw3 && pushd fftw3 && wget -O- "$SCRIPT_TARBALL" | tar xz --strip-components=1 && popd"
+}
+
 ffbuild_dockerbuild() {
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --enable-maintainer-mode
         --disable-shared
         --enable-static
         --disable-fortran
@@ -40,9 +44,10 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
-    sed -i 's/windows.h/process.h/' configure.ac
+#    sed -i 's/windows.h/process.h/' configure.ac
 
-    ./bootstrap.sh "${myconf[@]}"
+#    ./bootstrap.sh "${myconf[@]}"
+    ./configure "${myconf[@]}"
     make -j$(nproc)
     make install
 }
