@@ -9,7 +9,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerdl() {
-    echo "mkdir -p fftw3 && pushd fftw3 && wget -O- "$SCRIPT_TARBALL" | tar xz --strip-components=1 && popd"
+    echo "wget -O- "$SCRIPT_TARBALL" | tar xz --strip-components=1"
 }
 
 ffbuild_dockerbuild() {
