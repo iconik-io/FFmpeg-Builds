@@ -19,6 +19,8 @@ ffbuild_dockerbuild() {
             git am < "$patch"
         done
     else
+        git config user.name "iconik"
+        git config user.email "info@iconik.io"
         for patch in $ROOT_DIR/patches/aom/*.patch; do
             echo "Applying $patch"
             git am < "$patch"
