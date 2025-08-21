@@ -57,7 +57,8 @@ pipeline {
                         label 'osx-m1'
                     }
                     steps {
-                        unstash(name: "ffmpeg-sources")
+//                         unstash(name: "ffmpeg-sources")
+                        clean_workspace()
                         sh "./generate_deps.sh darwinarm64 ${env.FFMPEG_LIC_TYPE} ${env.FFMPEG_VERSION}"
                         sh "./build_macos.sh darwinarm64 ${env.FFMPEG_LIC_TYPE} ${env.FFMPEG_VERSION}"
                         archiveArtifacts 'artifacts/**'
