@@ -5,10 +5,7 @@ source util/vars.sh
 
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
-PYTHON=$(pyenv root)/versions/3.12.9/bin/python3
-$PYTHON -m venv --clear py_build_env
 source py_build_env/bin/activate
-python -m pip install -r requirements_macos.txt
 export RUN_IN_DOCKER=$(false)
 
 source "variants/${TARGET}-${VARIANT}.sh"

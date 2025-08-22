@@ -3,6 +3,10 @@ set -e
 cd "$(dirname "$0")"
 source util/vars.sh
 
+PYTHON=$(pyenv root)/versions/3.12.9/bin/python3
+$PYTHON -m venv --clear py_build_env
+source py_build_env/bin/activate
+python -m pip install -r requirements_macos.txt
 export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 export LC_ALL=en_US.UTF-8
 export ROOT_DIR="$(pwd)"
