@@ -16,9 +16,21 @@ ffbuild_dockerdl() {
 ffbuild_dockerbuild() {
     mkdir build/linux
     cd build/linux
+        local myconf=(
+        -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN"
+        -DCMAKE_BUILD_TYPE=Release
+        -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX"
+        -DCOMPILE_10BIT=1
+        -DBUILD_SHARED_LIBS=NO
+    )
 
-    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
-        -DCOMPILE_10BIT=1 -DBUILD_SHARED_LIBS=NO ../..
+    if [[ $TARGET == darwin* ]]; then
+        myconf+=( -DCMAKE_POLICY_VERSION_MINIMUM=3.5 )
+    fi
+    cmake "${myconf[@]}" ../..
+
+#    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+#        -DCOMPILE_10BIT=1 -DBUILD_SHARED_LIBS=NO ../..
     make -j$(nproc)
     make install
 }

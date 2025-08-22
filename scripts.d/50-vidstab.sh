@@ -15,6 +15,9 @@ ffbuild_dockerbuild() {
         -DBUILD_SHARED_LIBS=OFF
         -DUSE_OMP=ON
     )
+    if [[ $TARGET == darwin* ]]; then
+        mycmake+=( -DCMAKE_POLICY_VERSION_MINIMUM=3.5 )
+    fi
 
     if [[ $TARGET == *arm64 ]]; then
         mycmake+=(

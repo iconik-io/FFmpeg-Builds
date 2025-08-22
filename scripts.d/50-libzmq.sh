@@ -28,6 +28,9 @@ ffbuild_dockerbuild() {
     if [[ $TARGET == win* ]]; then
         myconf+=( -DPOLLER="epoll" )
     fi
+    if [[ $TARGET == darwin* ]]; then
+        myconf+=( -DCMAKE_POLICY_VERSION_MINIMUM=3.5 )
+    fi
 
     cmake "${myconf[@]}" ..
     make -j$(nproc)
