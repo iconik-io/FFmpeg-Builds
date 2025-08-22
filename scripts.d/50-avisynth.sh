@@ -10,6 +10,10 @@ ffbuild_enabled() {
 
 ffbuild_dockerbuild() {
     # their version check is insistant on a tag to exist, so make one
+    if [[ $(uname -s) == "Darwin" ]]; then
+        git config user.name "iconik"
+        git config user.email "info@iconik.io"
+    fi
     git tag -a ffbuild -m "FFbuild Version"
 
     mkdir build && cd build
