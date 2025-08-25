@@ -8,6 +8,14 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
+    if [[ $TARGET == darwin* ]]; then
+        git config user.name "iconik"
+        git config user.email "info@iconik.io"
+        for patch in $ROOT_DIR/patches/soxr/*.patch; do
+            echo "Applying $patch"
+            git am < "$patch"
+        done
+    fi
     mkdir build && cd build
 
     local myconf=(
@@ -54,5 +62,9 @@ ffbuild_ldflags() {
 }
 
 ffbuild_libs() {
-    [[ $TARGET != winarm64 ]] && echo -lgomp
+    if [[ $TARGET == darwin* ]]; then
+        echo -lomp
+    elif [[ $TARGET != winarm64 ]]; then
+        echo -lgomp
+    fi
 }
