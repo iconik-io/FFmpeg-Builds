@@ -21,6 +21,8 @@ ffbuild_dockerbuild() {
     )
 
     if [[ $TARGET == darwin* ]]; then
+        export CFLAGS="$CFLAGS -Xpreprocessor -fopenmp -I/opt/homebrew/opt/libomp/include" # for libomp, needs fixing
+        export LDFLAGS="$LDFLAGS /opt/homebrew/opt/libomp/lib/libomp.a"
         myconf+=( -DCMAKE_POLICY_VERSION_MINIMUM=3.5 )
     fi
 
@@ -32,7 +34,9 @@ ffbuild_dockerbuild() {
     make -j$(nproc)
     make install
 
-    if [[ $TARGET != winarm64 ]]; then
+    if [[ $TARGET == darwin* ]]; then
+        echo "Libs.private: $FFBUILD_PREFIX/lib/libomp.a" >> "$FFBUILD_PREFIX"/lib/pkgconfig/soxr.pc
+    elif [[ $TARGET != winarm64 ]]; then
         echo "Libs.private: -lgomp" >> "$FFBUILD_PREFIX"/lib/pkgconfig/soxr.pc
     fi
 }
