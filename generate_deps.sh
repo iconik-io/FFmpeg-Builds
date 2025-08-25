@@ -19,6 +19,8 @@ export CXX="g++"
 export CFLAGS="-I$FFBUILD_PREFIX/include -O2 -pipe -march=armv8-a -fPIC -DPIC -D_FORTIFY_SOURCE=2 -fstack-protector-strong -pthread"
 export CXXFLAGS="-I$FFBUILD_PREFIX/include -O2 -pipe -march=armv8-a -fPIC -DPIC -D_FORTIFY_SOURCE=2 -fstack-protector-strong -pthread"
 export LDFLAGS="-L$FFBUILD_PREFIX/lib -O2 -pipe -march=armv8-a -fstack-protector-strong -pthread -lm"
+export CFLAGS="$CFLAGS -I/opt/homebrew/opt/libomp/include" # for libomp, needs fixing
+export LDFLAGS="$LDFLAGS /opt/homebrew/opt/libomp/lib/libomp.a"
 export STAGE_CFLAGS="-fvisibility=hidden"
 export STAGE_CXXFLAGS="-fvisibility=hidden"
 export TARGET="$TARGET"
