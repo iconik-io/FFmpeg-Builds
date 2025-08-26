@@ -130,6 +130,14 @@ for script in scripts.d/**/*.sh; do
     FF_LDEXEFLAGS+=" $(get_output $script ldexeflags)"
     FF_LIBS+=" $(get_output $script libs)"
 done
+for script in scripts.d/*.sh; do
+    FF_CONFIGURE+=" $(get_output $script configure)"
+    FF_CFLAGS+=" $(get_output $script cflags)"
+    FF_CXXFLAGS+=" $(get_output $script cxxflags)"
+    FF_LDFLAGS+=" $(get_output $script ldflags)"
+    FF_LDEXEFLAGS+=" $(get_output $script ldexeflags)"
+    FF_LIBS+=" $(get_output $script libs)"
+done
 
 FF_CONFIGURE="$(xargs <<< "$FF_CONFIGURE")"
 FF_CFLAGS="$(xargs <<< "$FF_CFLAGS")"

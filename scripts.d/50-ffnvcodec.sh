@@ -17,6 +17,7 @@ SCRIPT_BRANCH4="sdk/12.2"
 
 ffbuild_enabled() {
     [[ $TARGET == winarm64 ]] && return -1
+    [[ $TARGET == darwin* ]] && return -1
     return 0
 }
 

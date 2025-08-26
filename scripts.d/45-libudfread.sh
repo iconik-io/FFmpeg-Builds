@@ -5,7 +5,6 @@ SCRIPT_COMMIT="a089d1bd4118f5072a1dbb76f459dc41bb106bb5"
 
 ffbuild_enabled() {
     if [[ $TARGET == darwin* ]]; then
-        echo "skip libudfread on macOS"
         return -1
     fi
     return 0

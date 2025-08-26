@@ -62,9 +62,7 @@ ffbuild_ldflags() {
 }
 
 ffbuild_libs() {
-    if [[ $TARGET == darwin* ]]; then
-        echo -lomp
-    elif [[ $TARGET != winarm64 ]]; then
+    if [[ $TARGET != winarm64 && $TARGET != darwin* ]]; then
         echo -lgomp
     fi
 }

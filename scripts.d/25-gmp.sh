@@ -5,7 +5,6 @@ SCRIPT_COMMIT="655b673c0c825a772b2596d9761ffc3dd953074e"
 
 ffbuild_enabled() {
     if [[ $TARGET == darwin* ]]; then
-        echo "skip gmp on macOS"
         return -1
     fi
     return 0

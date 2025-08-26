@@ -48,6 +48,8 @@ ffbuild_dockerbuild() {
         rm "$FFBUILD_PREFIX"/{bin/libxvidcore.dll,lib/libxvidcore.dll.a}
     elif [[ $TARGET == linux* ]]; then
         rm "$FFBUILD_PREFIX"/lib/libxvidcore.so*
+    elif [[ $TARGET == darwin* ]]; then
+        rm "$FFBUILD_PREFIX"/lib/libxvidcore*.dylib
     fi
 }
 

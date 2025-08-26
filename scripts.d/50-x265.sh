@@ -13,9 +13,9 @@ ffbuild_dockerdl() {
 }
 
 ffbuild_dockerbuild() {
-    if [[ $(uname -s) == "Darwin" ]]; then
-        export AR="/opt/homebrew/opt/binutils/bin/ar"
-    fi
+#    if [[ $(uname -s) == "Darwin" ]]; then
+#        export AR="/opt/homebrew/opt/binutils/bin/ar"
+#    fi
     local common_config=(
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX"
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN"
@@ -51,7 +51,10 @@ EOF
         mv ../10bit/libx265.a ../8bit/libx265_main10.a
         mv libx265.a libx265_main.a
 
-        ${AR} -M <<EOF
+        if [[ $(uname -s) == "Darwin" ]]; then
+            /usr/bin/libtool -static -o "libx265.a" "libx265_main.a" "libx265_main10.a" "libx265_main12.a"
+        else
+            ${AR} -M <<EOF
 CREATE libx265.a
 ADDLIB libx265_main.a
 ADDLIB libx265_main10.a
@@ -59,6 +62,7 @@ ADDLIB libx265_main12.a
 SAVE
 END
 EOF
+        fi
     else
         mkdir 8bit
         cd 8bit
