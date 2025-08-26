@@ -17,6 +17,7 @@ def clean_workspace() {
       projectName: env.JOB_BASE_NAME,
       fingerprintArtifacts: true,
       target: '.',
+      selector: lastWithArtifacts(),
       filter: '.cache/downloads/**'
     ])
   } catch(Exception ex) {}
@@ -58,7 +59,6 @@ pipeline {
                     }
                     steps {
                         unstash(name: "ffmpeg-sources")
-                        clean_workspace()
                         sh "./generate_deps.sh darwinarm64 ${env.FFMPEG_LIC_TYPE} ${env.FFMPEG_VERSION}"
                         sh "./build_macos.sh darwinarm64 ${env.FFMPEG_LIC_TYPE} ${env.FFMPEG_VERSION}"
                         archiveArtifacts 'artifacts/**'
