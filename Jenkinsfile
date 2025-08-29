@@ -32,7 +32,7 @@ pipeline {
         stage('Build') {
             failFast true
             stages {
-                stage('BuildFfmpegCross') {
+                stage('BuildFfmpeg') {
                     agent {
                         label 'docker'
                     }
@@ -44,6 +44,23 @@ pipeline {
                         sh "./build.sh linux64 ${env.FFMPEG_LIC_TYPE} ${env.FFMPEG_VERSION}"
                         sh "./build.sh win64 ${env.FFMPEG_LIC_TYPE} ${env.FFMPEG_VERSION}"
                         archiveArtifacts '.cache/downloads/**'
+                        archiveArtifacts 'artifacts/**'
+                    }
+                    post {
+                        cleanup {
+                            sh "sudo chown -R jenkins: ${env.WORKSPACE} || /bin/true"
+                            deleteDir() /* clean up our workspace */
+                        }
+                    }
+                }
+                stage('BuildFfmpegarm') {
+                    agent {
+                        label 'osx-m1'
+                    }
+                    steps {
+                        unstash(name: "ffmpeg-sources")
+                        sh "./makeimage.sh linuxarm64 ${env.FFMPEG_LIC_TYPE} ${env.FFMPEG_VERSION}"
+                        sh "./build.sh linuxarm64 ${env.FFMPEG_LIC_TYPE} ${env.FFMPEG_VERSION}"
                         archiveArtifacts 'artifacts/**'
                     }
                     post {
