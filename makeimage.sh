@@ -5,6 +5,7 @@ source util/vars.sh
 
 if [[ $(uname -s) == "Darwin" ]]; then
     TMPCFG="$(gmktemp --suffix=.toml)"
+    export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 else
     TMPCFG="$(mktemp --suffix=.toml)"
 fi
