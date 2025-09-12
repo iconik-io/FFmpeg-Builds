@@ -12,6 +12,7 @@ export LC_ALL=en_US.UTF-8
 export ROOT_DIR="$(pwd)"
 export FFBUILD_PREFIX="$(pwd)/build/output"
 export DEPSDIR="$(pwd)/build/deps/"
+rm -rf "$(pwd)/build"
 mkdir -p $DEPSDIR
 export PKG_CONFIG_LIBDIR=$FFBUILD_PREFIX/lib/pkgconfig:$FFBUILD_PREFIX/share/pkgconfig
 export CC="gcc"
