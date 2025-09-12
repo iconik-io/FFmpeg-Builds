@@ -11,7 +11,7 @@ else
 fi
 cat <<EOF >"$TMPCFG"
 [worker.oci]
-  max-parallelism = 4
+  max-parallelism = 2
 EOF
 trap "rm -f '$TMPCFG'" EXIT
 
