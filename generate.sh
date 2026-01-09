@@ -124,8 +124,7 @@ source "variants/${TARGET}-${VARIANT}.sh"
 for addin in ${ADDINS[*]}; do
     source "addins/${addin}.sh"
 done
-
-for script in scripts.d/**/*.sh; do
+for script in $(find scripts.d -type f -name '*.sh' | sort); do
     echo "Processing $script"
     FF_CONFIGURE+=" $(get_output $script configure)"
     FF_CFLAGS+=" $(get_output $script cflags)"

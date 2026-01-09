@@ -123,15 +123,7 @@ for addin in ${ADDINS[*]}; do
     source "addins/${addin}.sh"
 done
 
-for script in scripts.d/**/*.sh; do
-    FF_CONFIGURE+=" $(get_output $script configure)"
-    FF_CFLAGS+=" $(get_output $script cflags)"
-    FF_CXXFLAGS+=" $(get_output $script cxxflags)"
-    FF_LDFLAGS+=" $(get_output $script ldflags)"
-    FF_LDEXEFLAGS+=" $(get_output $script ldexeflags)"
-    FF_LIBS+=" $(get_output $script libs)"
-done
-for script in scripts.d/*.sh; do
+for script in $(find scripts.d -type f -name '*.sh' | sort); do
     FF_CONFIGURE+=" $(get_output $script configure)"
     FF_CFLAGS+=" $(get_output $script cflags)"
     FF_CXXFLAGS+=" $(get_output $script cxxflags)"
